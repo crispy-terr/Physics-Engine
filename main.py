@@ -6,6 +6,7 @@ from settings import SettingsWindow
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
+part_list = []
  
 pygame.init()
 screen_size = (1400, 1000)
@@ -20,9 +21,9 @@ surface = pygame.Surface(surface_size)
 surface.fill(WHITE)
 
 root = tk.Tk()
-settings_window = SettingsWindow(root, [0, 0], [0, 0])
+settings_window = SettingsWindow(root, [0, 0], [0, 0], part_list)
 
-part_list = []
+
 running = True
 while running:
 
