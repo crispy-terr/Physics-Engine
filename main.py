@@ -1,7 +1,7 @@
 import pygame
 import tkinter as tk
 from particle import Particle
-from settings import SettingsWindow
+from settings import ParticleSettingsWindow, GlobalSettingsWindow
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -20,9 +20,8 @@ surface_size = (1400, 1000)
 surface = pygame.Surface(surface_size)
 surface.fill(WHITE)
 
-root = tk.Tk()
-settings_window = SettingsWindow(root, [0, 0], [0, 0], part_list)
-
+particle_settings_root = tk.Tk()
+particle_settings_window = ParticleSettingsWindow(particle_settings_root, [0, 0], [0, 0], part_list)
 
 running = True
 while running:
@@ -32,12 +31,12 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
 
-            vx = settings_window.vel_x
-            vy = settings_window.vel_y
-            ax = settings_window.acc_x
-            ay = settings_window.acc_y
+            vx = particle_settings_window.vel_x
+            vy = particle_settings_window.vel_y
+            ax = particle_settings_window.acc_x
+            ay = particle_settings_window.acc_y
 
-            particle = Particle([vx, vy], [ax, vy], 9, 1000)
+            particle = Particle([vx, vy], [ax, ay], 9, 1000)
             particle.draw(pygame.mouse.get_pos(), surface) 
             part_list.append(particle)
 
@@ -57,7 +56,7 @@ while running:
     
     clock.tick(60)
 
-    root.update_idletasks()
-    root.update()
+    particle_settings_root.update_idletasks()
+    particle_settings_root.update()
  
 pygame.quit()

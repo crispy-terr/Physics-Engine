@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class SettingsWindow:
+class ParticleSettingsWindow:
       def __init__(self, master, current_velocity, current_acceleration, particle_list):
             self.master = master
             
@@ -18,7 +18,7 @@ class SettingsWindow:
             self.acc_y_var = tk.IntVar(value=self.acc_y)
             self.gravity_var = tk.IntVar(value=self.gravity)
 
-            master.title("Settings")
+            master.title("Particle Settings")
 
             # Horizontal velocity slider
             self.x_vel_label = tk.Label(master, text="Horizontal Velocity:")
@@ -36,10 +36,6 @@ class SettingsWindow:
             self.y_acc_label = tk.Label(master, text="Vertical Acceleration:")
             self.y_acc_scale = tk.Scale(master, variable=self.acc_y_var, from_= -20, to= 20, orient= tk.HORIZONTAL, command=self.update_y_acc)
 
-            # Gravity slider
-            # self.gravity_label = tk.Label(master, text="Gravity: (Not functioning currently)")
-            # self.gravity_scale = tk.Scale(master, variable=self.gravity_var, from_= -20, to= 20, orient= tk.HORIZONTAL, command=self.update_gravity)
-
             # Clear Button
             self.clear_button = tk.Button(master, text="Clear", command=self.clear_board)
 
@@ -51,9 +47,7 @@ class SettingsWindow:
             self.x_acc_label.pack(anchor=tk.CENTER)
             self.x_acc_scale.pack(anchor=tk.CENTER)
             self.y_acc_label.pack(anchor=tk.CENTER)
-            self.y_acc_scale.pack(anchor=tk.CENTER)
-            # self.gravity_label.pack(anchor=tk.CENTER)
-            # self.gravity_scale.pack(anchor=tk.CENTER)   
+            self.y_acc_scale.pack(anchor=tk.CENTER)  
             self.clear_button.pack(anchor=tk.CENTER)     
 
       def update_x_vel(self, val):
@@ -75,3 +69,21 @@ class SettingsWindow:
             self.particle_list.clear()
 
 
+class GlobalSettingsWindow():
+      def __init__(self, master):
+            self.master = master
+
+            self.gravity = 0
+            
+            self.gravity_var = tk.IntVar(self.gravity)
+
+            # Gravity slider
+            self.gravity_label = tk.Label(master, text="Gravity: (Not functioning currently)")
+            self.gravity_scale = tk.Scale(master, variable=self.gravity_var, from_= -20, to= 20, orient= tk.HORIZONTAL, command=self.update_gravity)
+
+            # Add Everything
+            self.gravity_label.pack(anchor=tk.CENTER)
+            self.gravity_scale.pack(anchor=tk.CENTER)
+      
+      def update_gravity(self):
+           self.gravity = self.gravity_var.get()
