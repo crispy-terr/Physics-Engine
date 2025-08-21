@@ -10,13 +10,15 @@ class ParticleSettingsWindow:
             self.vel_y = current_velocity[1]
             self.acc_x = current_acceleration[0]
             self.acc_y = current_acceleration[1]
-            self.gravity = 0
+            self.mass = 1
+            self.radius = 1
 
             self.vel_x_var = tk.IntVar(value=self.vel_x)
             self.vel_y_var = tk.IntVar(value=self.vel_y)
             self.acc_x_var = tk.IntVar(value=self.acc_x)
             self.acc_y_var = tk.IntVar(value=self.acc_y)
-            self.gravity_var = tk.IntVar(value=self.gravity)
+            self.mass_var = tk.IntVar(value=self.mass)
+            self.radius_var = tk.IntVar(value=self.radius)
 
             master.title("Particle Settings")
 
@@ -36,6 +38,14 @@ class ParticleSettingsWindow:
             self.y_acc_label = tk.Label(master, text="Vertical Acceleration:")
             self.y_acc_scale = tk.Scale(master, variable=self.acc_y_var, from_= -20, to= 20, orient= tk.HORIZONTAL, command=self.update_y_acc)
 
+            # Mass slider
+            self.mass_label = tk.Label(master, text="Mass:")
+            self.mass_scale = tk.Scale(master, variable=self.mass_var, from_= 1, to= 20, orient= tk.HORIZONTAL, command=self.update_mass)
+
+            # Radius slider
+            self.radius_label = tk.Label(master, text="Radius")
+            self.radius_scale = tk.Scale(master, variable=self.radius_var, from_= 1, to=50, orient=tk.HORIZONTAL, command=self.update_radius)
+
             # Clear Button
             self.clear_button = tk.Button(master, text="Clear", command=self.clear_board)
 
@@ -47,7 +57,11 @@ class ParticleSettingsWindow:
             self.x_acc_label.pack(anchor=tk.CENTER)
             self.x_acc_scale.pack(anchor=tk.CENTER)
             self.y_acc_label.pack(anchor=tk.CENTER)
-            self.y_acc_scale.pack(anchor=tk.CENTER)  
+            self.y_acc_scale.pack(anchor=tk.CENTER)
+            self.mass_label.pack(anchor=tk.CENTER)
+            self.mass_scale.pack(anchor=tk.CENTER)
+            self.radius_label.pack(anchor=tk.CENTER)
+            self.radius_scale.pack(anchor=tk.CENTER)  
             self.clear_button.pack(anchor=tk.CENTER)     
 
       def update_x_vel(self, val):
@@ -62,8 +76,11 @@ class ParticleSettingsWindow:
       def update_y_acc(self, val):
           self.acc_y = self.acc_y_var.get()
 
-      def update_gravity(self, val):
-          self.gravity = self.gravity_var.get()
+      def update_mass(self, val):
+          self.mass = self.mass_var.get()
+      
+      def update_radius(self, val):
+           self.radius = self.radius_var.get()
 
       def clear_board(self):
             self.particle_list.clear()

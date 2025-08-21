@@ -4,15 +4,16 @@ BLUE = (0, 0, 255)
 CIRCLE_FILL = 0
 
 class Particle():
-    def __init__(self, velocity, acceleration, gravity, ground_y):
+    def __init__(self, velocity, acceleration, gravity, mass, radius, ground_y):
         self.ground_y = ground_y
         self.position = (0, 0)
         self.velocity_x = velocity[0]
         self.velocity_y = velocity[1]
         self.acceleration_x = acceleration[0]
         self.acceleration_y = acceleration[1]
-        self.radius = 10
+        self.radius = radius
         self.gravity = gravity
+        self.mass = mass
 
     def draw(self, position, surface):
         self.position_x = position[0]

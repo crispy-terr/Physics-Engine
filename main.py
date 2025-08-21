@@ -35,8 +35,10 @@ while running:
             vy = particle_settings_window.vel_y
             ax = particle_settings_window.acc_x
             ay = particle_settings_window.acc_y
+            mass = particle_settings_window.mass
+            radius = particle_settings_window.radius
 
-            particle = Particle([vx, vy], [ax, ay], 9, 1000)
+            particle = Particle([vx, vy], [ax, ay], 9, mass, radius, 1000)
             particle.draw(pygame.mouse.get_pos(), surface) 
             part_list.append(particle)
 
