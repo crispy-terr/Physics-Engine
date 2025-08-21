@@ -21,17 +21,17 @@ class Particle():
         pygame.draw.circle(surface, BLUE, (self.position_x, self.position_y), self.radius)
     
     def move(self):
+        self.position_x += self.velocity_x
+        self.position_y += self.velocity_y
 
         if self.position_y >= self.ground_y:
-            self.position_y = self.ground_y
-            self.velocity_y = -self.velocity_y
-        
+                self.position_y = self.ground_y
+                self.velocity_y = -self.velocity_y
+
         self.velocity_x += self.acceleration_x
-        self.position_x += self.velocity_x
+        self.velocity_y += self.acceleration_y
 
-        if self.position != self.ground_y:
-            self.position_y += self.velocity_y
-            self.velocity_y += self.acceleration_y
-
-            
-            
+        
+        
+        
+                    
