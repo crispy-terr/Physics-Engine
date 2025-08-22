@@ -12,7 +12,8 @@ class Particle():
         self.radius = radius
         self.forces_list = forces_list
         self.mass = mass
-
+        self.acceleration_x = acceleration[0]
+        self.acceleration_y = acceleration[1]
         self.sum_forces_x = 0
         self.sum_forces_y = 0
 
@@ -39,8 +40,8 @@ class Particle():
         for f in self.forces_list:
              self.sum_forces_x += f.x_comp
              self.sum_forces_y += f.y_comp
-        self.acceleration_x = self.sum_forces_x / self.mass
-        self.acceleration_y = self.sum_forces_y / self.mass
+        self.acceleration_x += self.sum_forces_x / self.mass
+        self.acceleration_y += self.sum_forces_y / self.mass
 
     def __str__(self):
          return f"vel: {self.velocity_x}, {self.velocity_y}\nacc: {self.acceleration_x}, {self.acceleration_y}\nSum F: {self.sum_forces_x}. {self.sum_forces_y}"
