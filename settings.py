@@ -98,7 +98,7 @@ class GlobalSettingsWindow():
             self.title_label = tk.Label(self.frame, text="Global Settings", font=("Arial, 14"))
 
             # Gravity slider
-            self.gravity_label = tk.Label(self.frame, text="Gravity: (Not functioning currently)")
+            self.gravity_label = tk.Label(self.frame, text="Gravity:")
             self.gravity_scale = tk.Scale(self.frame, variable=self.gravity_var, from_= -20, to= 20, orient= tk.HORIZONTAL, command=self.update_gravity)
 
             # Add Everything

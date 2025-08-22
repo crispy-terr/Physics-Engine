@@ -1,8 +1,10 @@
 import os
 import tkinter as tk
 import pygame
+import math
 from settings import CombinedSettingsWindow
 from particle import Particle
+from forces import Force
 
 SIM_DIMENSION = (800, 600)
 BLACK = (255, 255, 255)
@@ -21,6 +23,8 @@ class App:
 
         self.pygame_frame = tk.Frame(self.right_panel, bg="black", width=800, height=600)
         self.pygame_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.global_gravity = Force(self.left_panel.global_panel.gravity, math.pi/2)
 
         self.master.update()
 
@@ -46,7 +50,9 @@ class App:
         mass = pp.mass
         radius = pp.radius
 
-        particle = Particle([vx, vy], [ax, ay], 9, mass, radius, ground_y=SIM_DIMENSION[1])
+        # gravity = Force(self.left_panel.global_panel.gravity*mass, (math.pi/2))
+
+        particle = Particle(velocity=[vx, vy], acceleration=[ax, ay], forces_list=[self.global_gravity], mass=mass, radius=radius, ground_y=SIM_DIMENSION[1])
         particle.position_x = mx
         particle.position_y = my
         self.part_list.append(particle)
@@ -63,29 +69,16 @@ class App:
                 if event.type == pygame.QUIT:
                     self.master.quit()
                     return
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    vx = self.left_panel.particle_panel.vel_x
-                    vy = self.left_panel.particle_panel.vel_y
-                    ax = self.left_panel.particle_panel.acc_x
-                    ay = self.left_panel.particle_panel.acc_y
-                    mass = self.left_panel.particle_panel.mass
-                    radius = self.left_panel.particle_panel.radius
-
-                    particle = Particle([vx, vy], [ax, ay], 9, mass, radius, ground_y=SIM_DIMENSION[1])
-                    mouse_x, mouse_y = pygame.mouse.get_pos()
-                    particle.position_x = mouse_x
-                    particle.position_y = mouse_y
-
-                     
-                    self.part_list.append(particle)
-                    particle.draw(self.surface)
             
             self.surface.fill(BLACK)
 
+            self.global_gravity.update(magnitude=self.left_panel.global_panel.gravity)
+
             for p in self.part_list:
+                p.calc_acceleration()
                 p.move()
                 p.draw(self.surface)
-
+                #print(f"{p}\n")
 
             self.screen.blit(self.surface, (0, 0))
             pygame.display.flip()
