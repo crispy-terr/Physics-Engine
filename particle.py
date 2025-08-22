@@ -15,11 +15,8 @@ class Particle():
         self.gravity = gravity
         self.mass = mass
 
-    def draw(self, position, surface):
-        self.position_x = position[0]
-        self.position_y = position[1]
-        self.position = position
-        pygame.draw.circle(surface, BLUE, (self.position_x, self.position_y), self.radius)
+    def draw(self, surface):
+        pygame.draw.circle(surface, BLUE, (int(self.position_x), int(self.position_y)), self.radius)
     
     def move(self):
         self.position_x += self.velocity_x
