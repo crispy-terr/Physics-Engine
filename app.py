@@ -25,10 +25,10 @@ class App:
 
         if platform.system() == "Darwin":
             self.renderer = self.TkRenderer()
-            self.operating_system = MAC
+            self.render_function = self.renderTk
         else:
             self.renderer = self.SDLRenderer()
-            self.operating_system = NOT_MAC
+            self.render_function = self.renderSDL
 
         self.run()
 
@@ -68,10 +68,7 @@ class App:
                 p.move()
                 p.draw(self.surface)
 
-            if self.operating_system == MAC:
-                self.renderTk()
-            else:
-                self.renderSDL()
+            self.render_function()
 
             self.clock.tick(60)
             self.master.after(16, loop)
@@ -92,8 +89,6 @@ class App:
         self.canvas.bind("<Button-1>", self.on_click)
 
         self._tk_frame_image = None
-
-        
 
     def SDLRenderer(self):
         self.surface = pygame.Surface(SIM_DIMENSION)
