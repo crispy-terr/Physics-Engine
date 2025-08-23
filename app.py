@@ -23,7 +23,7 @@ class App:
         self.right_panel = tk.Frame(master, width=800, height=600)
         self.right_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        if platform.system == "darwin":
+        if platform.system() == "Darwin":
             self.renderer = self.TkRenderer()
             self.operating_system = MAC
         else:
