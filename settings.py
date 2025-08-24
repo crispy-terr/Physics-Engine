@@ -41,7 +41,7 @@ class ParticleSettingsWindow:
 
             # Mass slider
             self.mass_label = tk.Label(self.frame, text="Mass:")
-            self.mass_scale = tk.Scale(self.frame, variable=self.mass_var, from_= 1, to= 20, orient= tk.HORIZONTAL, command=self.update_mass)
+            self.mass_scale = tk.Scale(self.frame, variable=self.mass_var, from_= 1, to= 2e10, orient= tk.HORIZONTAL, command=self.update_mass)
 
             # Radius slider
             self.radius_label = tk.Label(self.frame, text="Radius")

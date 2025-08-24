@@ -74,10 +74,24 @@ class App:
                 p.move()
                 p.draw(self.surface)
 
+                total_attraction = Force(0, 0, self.global_gravity.color)
+
+                for p2 in self.part_list:
+                    if p2 != p:
+                        attraction = Force.attraction(p, p2)
+                        total_attraction = Force.combine_force(total_attraction, attraction)
+
+                combined_grav = Force.combine_force(self.global_gravity, total_attraction)
+                p.forces_list[0] = combined_grav
+                # for p2 in self.part_list:
+                #     if p2 != p:
+                #         attraction = Force.attraction(p, p2)
+                #         combined_grav = Force.combine_force(self.global_gravity, attraction)
+                #         p.forces_list[0] = combined_grav 
+
             if len(self.part_list) != 0:
                 self.part_list[len(self.part_list)-1].draw_fbd((SIM_DIMENSION[0]-50, 50))
 
-            
             self.render_function()
 
             self.clock.tick(60)
