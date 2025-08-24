@@ -1,4 +1,5 @@
 import tkinter as tk
+import math
 
 class ParticleSettingsWindow:
       def __init__(self, master, current_velocity, current_acceleration, particle_list):
@@ -11,14 +12,14 @@ class ParticleSettingsWindow:
             self.acc_x = current_acceleration[0]
             self.acc_y = current_acceleration[1]
             self.mass = 1
-            self.radius = 1
+            self.radius = 5
 
-            self.vel_x_var = tk.IntVar(value=self.vel_x)
-            self.vel_y_var = tk.IntVar(value=self.vel_y)
-            self.acc_x_var = tk.IntVar(value=self.acc_x)
-            self.acc_y_var = tk.IntVar(value=self.acc_y)
-            self.mass_var = tk.IntVar(value=self.mass)
-            self.radius_var = tk.IntVar(value=self.radius)
+            self.vel_x_var = tk.DoubleVar(value=self.vel_x)
+            self.vel_y_var = tk.DoubleVar(value=self.vel_y)
+            self.acc_x_var = tk.DoubleVar(value=self.acc_x)
+            self.acc_y_var = tk.DoubleVar(value=self.acc_y)
+            self.mass_var = tk.DoubleVar(value=self.mass)
+            self.radius_var = tk.DoubleVar(value=self.radius)
 
             self.title_label = tk.Label(self.frame, text="Particle Settings", font=("Arial, 14"))
 
@@ -92,22 +93,33 @@ class GlobalSettingsWindow():
             self.frame = tk.Frame(master)
 
             self.gravity = 0
+            self.gravity_angle = 90
             
-            self.gravity_var = tk.IntVar(value=self.gravity)
+            self.gravity_var = tk.DoubleVar(value=self.gravity)
+            self.gravity_angle_var = tk.DoubleVar(value=self.gravity_angle)
 
             self.title_label = tk.Label(self.frame, text="Global Settings", font=("Arial, 14"))
 
-            # Gravity slider
-            self.gravity_label = tk.Label(self.frame, text="Gravity:")
+            # Gravity magnitude slider
+            self.gravity_label = tk.Label(self.frame, text="Gravity Magnitude:")
             self.gravity_scale = tk.Scale(self.frame, variable=self.gravity_var, from_= -20, to= 20, orient= tk.HORIZONTAL, command=self.update_gravity)
+
+            #Gravity angle slider
+            self.gravity_angle_label = tk.Label(self.frame, text="Gravity Angle:")
+            self.gravity_angle_scale = tk.Scale(self.frame, variable=self.gravity_angle_var, from_= 0, to= 180, orient= tk.HORIZONTAL, command=self.update_gravity_angle)
 
             # Add Everything
             self.title_label.pack(anchor=tk.CENTER)
             self.gravity_label.pack(anchor=tk.CENTER)
             self.gravity_scale.pack(anchor=tk.CENTER)
+            self.gravity_angle_label.pack(anchor=tk.CENTER)
+            self.gravity_angle_scale.pack(anchor=tk.CENTER)
       
       def update_gravity(self, var):
            self.gravity = self.gravity_var.get()
+
+      def update_gravity_angle(self, var):
+           self.gravity_angle = self.gravity_angle_var.get()
 
 class CombinedSettingsWindow:
      def __init__(self, master, part_list):

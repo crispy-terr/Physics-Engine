@@ -8,8 +8,12 @@ from particle import Particle
 from forces import Force
 
 SIM_DIMENSION = (800, 600)
-BLACK = (255, 255, 255)
+CENTER_X = SIM_DIMENSION[0] / 2
+CENTER_Y = SIM_DIMENSION[1] / 2
+BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+GRAY = (100, 100, 100)
+RED = (255, 0, 0)
 MAC, NOT_MAC = 0, 1
 
 class App:
@@ -22,6 +26,8 @@ class App:
 
         self.right_panel = tk.Frame(master, width=800, height=600)
         self.right_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        self.global_gravity = Force(self.left_panel.global_panel.gravity, math.radians(self.left_panel.global_panel.gravity_angle), RED)
 
         if platform.system() == "Darwin":
             self.renderer = self.TkRenderer()
@@ -41,7 +47,7 @@ class App:
         mass = pp.mass
         radius = pp.radius
 
-        particle = Particle(velocity=[vx, vy], acceleration=[ax, ay], forces_list=[self.global_gravity], mass=mass, radius=radius, ground_y=SIM_DIMENSION[1])
+        particle = Particle(surface=self.surface, velocity=[vx, vy], acceleration=[ax, ay], forces_list=[self.global_gravity], mass=mass, radius=radius, ground_y=SIM_DIMENSION[1])
         particle.position_x = mx
         particle.position_y = my
         self.part_list.append(particle)
@@ -53,7 +59,7 @@ class App:
         def loop():
             if not self.running:
                 return
-            
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.master.quit()
@@ -61,13 +67,17 @@ class App:
             
             self.surface.fill(BLACK)
 
-            self.global_gravity.update(magnitude=self.left_panel.global_panel.gravity)
+            self.global_gravity.update(magnitude=self.left_panel.global_panel.gravity, angle=math.radians(self.left_panel.global_panel.gravity_angle))
 
             for p in self.part_list:
                 p.calc_acceleration()
                 p.move()
                 p.draw(self.surface)
 
+            if len(self.part_list) != 0:
+                self.part_list[len(self.part_list)-1].draw_fbd((SIM_DIMENSION[0]-50, 50))
+
+            
             self.render_function()
 
             self.clock.tick(60)
@@ -82,8 +92,6 @@ class App:
         pygame.init()
         self.surface = pygame.Surface(SIM_DIMENSION)
 
-        self.global_gravity = Force(self.left_panel.global_panel.gravity, math.pi/2)
-
         self.master.update()
 
         self.canvas.bind("<Button-1>", self.on_click)
@@ -95,8 +103,6 @@ class App:
 
         self.pygame_frame = tk.Frame(self.right_panel, bg="black", width=SIM_DIMENSION[0], height=SIM_DIMENSION[1])
         self.pygame_frame.pack(fill=tk.BOTH, expand=True)
-
-        self.global_gravity = Force(self.left_panel.global_panel.gravity, math.pi/2)
 
         self.master.update()
 
@@ -110,6 +116,7 @@ class App:
         self.surface = pygame.Surface(SIM_DIMENSION)
 
         self.pygame_frame.bind("<Button-1>", self.on_click)
+
 
     def renderTk(self):
         raw = pygame.image.tostring(self.surface, "RGB")
