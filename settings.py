@@ -63,7 +63,8 @@ class ParticleSettingsWindow:
             self.mass_label.pack(anchor=tk.CENTER)
             self.mass_scale.pack(anchor=tk.CENTER)
             self.radius_label.pack(anchor=tk.CENTER)
-            self.radius_scale.pack(anchor=tk.CENTER)  
+            self.radius_scale.pack(anchor=tk.CENTER)
+
             self.clear_button.pack(anchor=tk.CENTER)     
 
       def update_x_vel(self, val):
@@ -94,9 +95,11 @@ class GlobalSettingsWindow():
 
             self.gravity = 0
             self.gravity_angle = 90
+            self.draw_trail = True
             
             self.gravity_var = tk.DoubleVar(value=self.gravity)
             self.gravity_angle_var = tk.DoubleVar(value=self.gravity_angle)
+            self.draw_trail_var = tk.BooleanVar(value=self.draw_trail)
 
             self.title_label = tk.Label(self.frame, text="Global Settings", font=("Arial, 14"))
 
@@ -108,18 +111,27 @@ class GlobalSettingsWindow():
             self.gravity_angle_label = tk.Label(self.frame, text="Gravity Angle:")
             self.gravity_angle_scale = tk.Scale(self.frame, variable=self.gravity_angle_var, from_= 0, to= 180, orient= tk.HORIZONTAL, command=self.update_gravity_angle)
 
+            # Draw trail checkbox
+            self.draw_trail_label = tk.Label(self.frame, text="Draw Trail:")
+            self.draw_trail_cb = tk.Checkbutton(self.frame, variable=self.draw_trail_var, command=self.update_draw_trail)
+
             # Add Everything
             self.title_label.pack(anchor=tk.CENTER)
             self.gravity_label.pack(anchor=tk.CENTER)
             self.gravity_scale.pack(anchor=tk.CENTER)
             self.gravity_angle_label.pack(anchor=tk.CENTER)
             self.gravity_angle_scale.pack(anchor=tk.CENTER)
+            self.draw_trail_label.pack(anchor=tk.CENTER)
+            self.draw_trail_cb.pack(anchor=tk.CENTER)  
       
       def update_gravity(self, var):
            self.gravity = self.gravity_var.get()
 
       def update_gravity_angle(self, var):
            self.gravity_angle = self.gravity_angle_var.get()
+
+      def update_draw_trail(self):
+           self.draw_trail = self.draw_trail_var.get()
 
 class CombinedSettingsWindow:
      def __init__(self, master, part_list):

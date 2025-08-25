@@ -19,6 +19,7 @@ class Particle():
         self.acceleration_y = acceleration[1]
         self.sum_forces_x = 0
         self.sum_forces_y = 0
+        self.trail = []
 
         self.calc_acceleration()
 
@@ -39,6 +40,8 @@ class Particle():
                 self.velocity_y = -self.velocity_y
             else:
                 self.position_y = self.ground_y
+
+        self.trail.append((self.position_x, self.position_y))
 
     def calc_acceleration(self):
         self.sum_forces_x
@@ -61,6 +64,11 @@ class Particle():
             end = start + pygame.Vector2(2*f.x_comp, 2*f.y_comp)
             color = f.color
             self.draw_arrow(surface=self.surface, start=start, end=end, color=color)
+
+    def draw_trail(self):
+        for i, point in enumerate(self.trail[:-1]):
+            #self.surface.blit(self.trail_sprite, point)
+            pygame.draw.line(surface=self.surface, start_pos=self.trail[i], end_pos=self.trail[i+1], color=BLUE)
 
     def __str__(self):
          return f"vel: {self.velocity_x}, {self.velocity_y}\nacc: {self.acceleration_x}, {self.acceleration_y}\nSum F: {self.sum_forces_x}. {self.sum_forces_y}"

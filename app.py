@@ -74,6 +74,9 @@ class App:
                 p.move()
                 p.draw(self.surface)
 
+                if self.left_panel.global_panel.draw_trail:
+                    p.draw_trail()
+
                 total_attraction = Force(0, 0, self.global_gravity.color)
 
                 for p2 in self.part_list:
